@@ -16,3 +16,5 @@
 
 @endif
 @endsection
+
+https://www.laravelcode.com/post/laravel-8-crud-application-tutorial-with-example
