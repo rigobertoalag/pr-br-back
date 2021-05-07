@@ -14,10 +14,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $data = Category::latest()->paginate(5);
+        $data = Category::oldest()->paginate(10);
 
-        return view('categories.index',compact('data'))
-                    ->with('i', (request()->input('page', 1)-1)*5);
+        return view('categories.index', compact('data'))
+            ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -46,7 +46,7 @@ class CategoryController extends Controller
         Category::create($request->all());
 
         return redirect()->route('categories.index')
-                                ->with('success','Categoria registrada');
+            ->with('success', 'Categoria registrada');
     }
 
     /**
@@ -88,7 +88,7 @@ class CategoryController extends Controller
         $category->update($request->all());
 
         return redirect()->route('categories.index')
-                            ->with('success', 'Categoria actualizada correctamente');
+            ->with('success', 'Categoria actualizada correctamente');
     }
 
     /**
@@ -102,6 +102,6 @@ class CategoryController extends Controller
         $category->delete();
 
         return redirect()->route('categories.index')
-                            ->with('success', 'Categoria eliminada con exito');
+            ->with('success', 'Categoria eliminada con exito');
     }
 }

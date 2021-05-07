@@ -8,7 +8,7 @@
             CMS
         </div>
         <div class="pull-right">
-            <a class="btn btn-success" href="{{ route('categories.create' )}}"></a>
+            <a class="btn btn-success" href="{{ route('categories.create' )}}">Añadir categoria</a>
         </div>
     </div>
 </div>
@@ -21,15 +21,15 @@
 
 <table class="table table-bordered">
     <tr>
-        <th>No</th>
+        <th>ID</th>
         <th>Nombre</th>
         <th>Descripcion</th>
     </tr>
 
     @foreach($data as $key => $value)
     <tr>
-        <td>{{ ++$i }}</td>
-        <td>{{ $value->title }}</td>
+        <td>{{ $value->id }}</td>
+        <td>{{ $value->name }}</td>
         <td>{{ \Str::limit($value->description, 100) }}</td>
         <td>
             <form action="{{ route('categories.destroy', $value->id) }}" method="POST">
@@ -44,6 +44,6 @@
     @endforeach
 </table>
 
-{!! data->links() !!}
+{!! $data->links() !!}
 
 @endsection
