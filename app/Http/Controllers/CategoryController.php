@@ -41,9 +41,31 @@ class CategoryController extends Controller
         $request->validate([
             'name' => 'required',
             'description' => 'required',
+            'image' => 'image|nullable|max: 1999'
         ]);
 
-        Category::create($request->all());
+        if ($request->hasFile("image")) {
+            $filenameWithExt = $request->file("image")->getClientOriginalName ();
+            // Get Filename
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            // Get just Extension
+            $extension = $request->file("image")->getClientOriginalExtension();
+            // Filename To store
+            $fileNameToStore = $filename. "_". time().".".$extension;
+            // Upload Image
+            $path = $request->file("image")->storeAs("public/image", $fileNameToStore);
+            }
+            // Else add a dummy image
+            else {
+            $fileNameToStore = "noimage.jpg";
+            }
+
+        //Category::create($request->all());
+
+        $category = $request->all();
+        //$request->input('name')->input('description');
+
+        $category->save();
 
         return redirect()->route('categories.index')
             ->with('success', 'Categoria registrada');
