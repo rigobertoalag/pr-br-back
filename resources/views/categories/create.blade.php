@@ -12,9 +12,38 @@
     </div>
 </div>
 
-@if
-
+@if($errors->any())
+    <div class="alert alert-danger">
+        <strong>Oops!</strong>Hubo un problema
+        <ul>
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
 @endif
-@endsection
 
-https://www.laravelcode.com/post/laravel-8-crud-application-tutorial-with-example
+<form action="{{ route('categories.store') }}" method="POST">
+
+    @csrf
+    
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Categoria:</strong>
+                <input type="text" name="name" class="form-control" placeholder="Nombre de la categoria">
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Descripcion:</strong>
+                <input type="text" name="description" class="form-control" placeholder="Descripcion de la categoria">
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        </div>
+    </div>
+
+</form>
+@endsection
