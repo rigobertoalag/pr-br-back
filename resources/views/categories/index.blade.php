@@ -24,6 +24,7 @@
         <th>ID</th>
         <th>Nombre</th>
         <th>Descripcion</th>
+        <th>IMG</th>
     </tr>
 
     @foreach($data as $key => $value)
@@ -31,6 +32,7 @@
         <td>{{ $value->id }}</td>
         <td>{{ $value->name }}</td>
         <td>{{ \Str::limit($value->description, 100) }}</td>
+        <td><img src="/storage/image/{{$value->image}}" alt="" width="100"></td>
         <td>
             <form action="{{ route('categories.destroy', $value->id) }}" method="POST">
                 <a class="btn btn-info" href="{{ route('categories.show', $value->id)  }}">Detalles</a>

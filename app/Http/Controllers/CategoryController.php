@@ -41,30 +41,29 @@ class CategoryController extends Controller
         $request->validate([
             'name' => 'required',
             'description' => 'required',
-            'image' => 'image|nullable|max: 1999'
+            'image' => 'image|nullable|max: 1999|required'
         ]);
 
         if ($request->hasFile("image")) {
-            $filenameWithExt = $request->file("image")->getClientOriginalName ();
+            $filenameWithExt = $request->file("image")->getClientOriginalName();
             // Get Filename
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
             // Get just Extension
             $extension = $request->file("image")->getClientOriginalExtension();
             // Filename To store
-            $fileNameToStore = $filename. "_". time().".".$extension;
+            $fileNameToStore = $filename . "_" . time() . "." . $extension;
             // Upload Image
             $path = $request->file("image")->storeAs("public/image", $fileNameToStore);
-            }
-            // Else add a dummy image
-            else {
+        }
+        // Else add a dummy image
+        else {
             $fileNameToStore = "noimage.jpg";
-            }
+        }
 
-        //Category::create($request->all());
-
-        $category = $request->all();
-        //$request->input('name')->input('description');
-
+        $category = new Category;
+        $category->name = $request->name;
+        $category->description = $request->description;
+        $category->image = $fileNameToStore;
         $category->save();
 
         return redirect()->route('categories.index')
@@ -104,10 +103,32 @@ class CategoryController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'description' => 'required'
+            'description' => 'required',
+            'image' => 'image|nullable|max: 1999|required'
         ]);
 
-        $category->update($request->all());
+        if ($request->hasFile("image")) {
+            $filenameWithExt = $request->file("image")->getClientOriginalName();
+            // Get Filename
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            // Get just Extension
+            $extension = $request->file("image")->getClientOriginalExtension();
+            // Filename To store
+            $fileNameToStore = $filename . "_" . time() . "." . $extension;
+            // Upload Image
+            $path = $request->file("image")->storeAs("public/image", $fileNameToStore);
+        }
+        // Else add a dummy image
+        else {
+            $fileNameToStore = "noimage.jpg";
+        }
+
+        //$category = new Category;
+        $category->name = $request->name;
+        $category->description = $request->description;
+        $category->image = $fileNameToStore;
+        //$category->save();
+        $category->update();
 
         return redirect()->route('categories.index')
             ->with('success', 'Categoria actualizada correctamente');

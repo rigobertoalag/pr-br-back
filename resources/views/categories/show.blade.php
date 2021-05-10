@@ -25,5 +25,12 @@
             {{ $category->description }}
         </div>
     </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-12">
+        <div class="form-group">
+            <strong>Imagen</strong>
+            <img src="/storage/image/{{$category->image}}" alt="{{ $category->image }}" width="50%">
+        </div>
+    </div>
 </div>
 @endsection
