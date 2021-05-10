@@ -1,7 +1,11 @@
-@extends('categories.layout')
+@extends('layouts.app')
+
+@php
+$header = "Categorias";
+//$slot = "categories";
+@endphp
 
 @section('content')
-
 <div class="row">
     <div class="col-lg-12 margin-tb">
         <div class="pull-left">
@@ -13,11 +17,11 @@
     </div>
 </div>
 
-@if($message = Session::get('success'))
+<!--@if($message = Session::get('success'))
     <div class="alert alert-success">
         <p>{{ $message }}</p>
     </div>
-@endif
+@endif-->
 
 <table class="table table-bordered">
     <tr>
@@ -47,5 +51,4 @@
 </table>
 
 {!! $data->links() !!}
-
 @endsection
