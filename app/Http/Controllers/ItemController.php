@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Item;
+use App\Models\Category;
 
-class CategoryController extends Controller
+class ItemController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +15,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $data = Category::oldest()->paginate(10);
+        $data = Item::oldest()->paginate(10);
+        $cat = Category::all();
 
-        return view('categories.index', compact('data'))
+        return view('items.index', compact('data', 'cat'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
@@ -28,7 +29,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('categories.create');
+        $cat = Category::all();
+        return view('items.create', compact('cat'));
     }
 
     /**
@@ -42,7 +44,8 @@ class CategoryController extends Controller
         $request->validate([
             'name' => 'required',
             'description' => 'required',
-            'image' => 'image|nullable|max: 1999|required'
+            'image' => 'image|nullable|max: 1999|required',
+            'category_id' => 'required',
         ]);
 
         if ($request->hasFile("image")) {
@@ -61,52 +64,54 @@ class CategoryController extends Controller
             $fileNameToStore = "noimage.jpg";
         }
 
-        $category = new Category;
-        $category->name = $request->name;
-        $category->description = $request->description;
-        $category->image = $fileNameToStore;
-        $category->user_id = auth()->user()->id;
-        $category->save();
+        $item = new Item;
+        $item->name = $request->name;
+        $item->description = $request->description;
+        $item->category_id = $request->category_id;
+        $item->img = $fileNameToStore;
+        $item->user_id = auth()->user()->id;
+        $item->save();
 
-        return redirect()->route('categories.index')
-            ->with('success', 'Categoria registrada');
+        return redirect()->route('items.index')
+            ->with('success', 'Item guardado');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Category  $category
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function show($id)
     {
-        return view('categories.show', compact('category'));
+        return view('items.show', compact('item'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Category  $category
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit($id)
     {
-        return view('categories.edit', compact('category'));
+        return view('items.edit', compact('item'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Category  $category
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, Item $item)
     {
         $request->validate([
             'name' => 'required',
             'description' => 'required',
-            'image' => 'image|nullable|max: 1999'
+            'image' => 'image|nullable|max: 1999|required',
+            'category_id' => 'required',
         ]);
 
         if ($request->hasFile("image")) {
@@ -126,27 +131,27 @@ class CategoryController extends Controller
         }
 
         //$category = new Category;
-        $category->name = $request->name;
-        $category->description = $request->description;
-        $category->image = $fileNameToStore;
+        $item->name = $request->name;
+        $item->description = $request->description;
+        $item->image = $fileNameToStore;
         //$category->save();
-        $category->update();
+        $item->update();
 
-        return redirect()->route('categories.index')
-            ->with('success', 'Categoria actualizada correctamente');
+        return redirect()->route('items.index')
+            ->with('success', 'Item actulizado correctamente');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Category  $category
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy(Item $item)
     {
-        $category->delete();
+        $item->delete();
 
-        return redirect()->route('categories.index')
-            ->with('success', 'Categoria eliminada con exito');
+        return redirect()->route('items.index')
+            ->with('success', 'Item eliminado con exito');
     }
 }

@@ -1,4 +1,8 @@
-@extends('categories.layout')
+@extends('layouts.app')
+
+@php
+    $header = 'Editar categoria'
+@endphp
 
 @section('content')
 
