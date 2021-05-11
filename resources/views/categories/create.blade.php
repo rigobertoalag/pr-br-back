@@ -1,4 +1,8 @@
-@extends('categories.layout')
+@extends('layouts.app')
+
+@php
+    $header = 'Añadir Categoria'
+@endphp
 
 @section('content')
 <div class="row">
