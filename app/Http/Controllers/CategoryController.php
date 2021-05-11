@@ -8,6 +8,15 @@ use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
+    //Api calls
+    public function apiIndex(){
+        return Category::orderBy('created_at', 'asc')->get();  //returns values in ascending order
+    }
+
+    public function apiShow($id) {
+        return Category::findorFail($id); //searches for the object in the database using its id and returns it.
+    }
+    //End Api calls
     /**
      * Display a listing of the resource.
      *

@@ -5,9 +5,26 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Item;
 use App\Models\Category;
+use Illuminate\Support\Facades\DB;
 
 class ItemController extends Controller
 {
+    //Api calls
+    public function apiIndex(){
+        return Item::orderBy('created_at', 'asc')->get();  //returns values in ascending order
+    }
+
+    public function apiShow($id) {
+        /**
+         * $user = DB::table('users')->where('name', 'John')->first();
+         * return $user->email;
+         */
+        $item = DB::table('items')->where('category_id', $id)->get();
+        
+        return $item;
+        //return Item::findorFail($id); //searches for the object in the database using its id and returns it.
+    }
+    //End Api calls
     /**
      * Display a listing of the resource.
      *
