@@ -16,9 +16,9 @@ class ItemController extends Controller
     public function index()
     {
         $data = Item::oldest()->paginate(10);
-        $cat = Category::all();
+        //$cat = Category::all();
 
-        return view('items.index', compact('data', 'cat'))
+        return view('items.index', compact('data'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
@@ -93,9 +93,10 @@ class ItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Item $item)
     {
-        return view('items.edit', compact('item'));
+        $cat = Category::all();
+        return view('items.edit', compact('item', 'cat'));
     }
 
     /**
@@ -110,7 +111,7 @@ class ItemController extends Controller
         $request->validate([
             'name' => 'required',
             'description' => 'required',
-            'image' => 'image|nullable|max: 1999|required',
+            'image' => 'image|nullable|max: 1999',
             'category_id' => 'required',
         ]);
 
@@ -133,7 +134,9 @@ class ItemController extends Controller
         //$category = new Category;
         $item->name = $request->name;
         $item->description = $request->description;
-        $item->image = $fileNameToStore;
+        $item->img = $fileNameToStore;
+        $item->category_id = $request->category_id;
+        $item->user_id = auth()->user()->id;
         //$category->save();
         $item->update();
 

@@ -36,14 +36,12 @@ $header = "Items";
         <td>{{ $value->id }}</td>
         <td>{{ $value->name }}</td>
         <td>{{ \Str::limit($value->description, 100) }}</td>
-        @foreach($cat as $cat =>$category)
-            <td>{{$category->name}}</td>
-        @endforeach
         <td><img src="/storage/image/{{$value->img}}" alt="" width="100"></td>
+        <td>{{ $value->category_id }}</td>
         <td>
-            <form action="{{ route('categories.destroy', $value->id) }}" method="POST">
-                <a class="btn btn-info" href="{{ route('categories.show', $value->id)  }}">Detalles</a>
-                <a class="btn btn-primary" href="{{ route('categories.edit', $value->id)  }}">Editar</a>
+            <form action="{{ route('items.destroy', $value->id) }}" method="POST">
+                <a class="btn btn-info" href="{{ route('items.show', $value->id)  }}">Detalles</a>
+                <a class="btn btn-primary" href="{{ route('items.edit', $value->id)  }}">Editar</a>
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="btn btn-danger">Eliminar</button>
