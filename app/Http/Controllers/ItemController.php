@@ -24,6 +24,15 @@ class ItemController extends Controller
         return $item;
         //return Item::findorFail($id); //searches for the object in the database using its id and returns it.
     }
+
+    /**
+     * $cars = array('BMW', 'Ferrari', 'Honda');
+        $cars_together = implode(", ", $cars);
+        echo $cars_together;
+     * $users = DB::table('users')
+                    ->whereIn('id', [1, 2, 3])
+                    ->get();
+     */
     //End Api calls
     /**
      * Display a listing of the resource.
