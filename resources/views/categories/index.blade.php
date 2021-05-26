@@ -7,7 +7,7 @@ $header = 'Categorias';
 @section('content')
     <!-- component -->
     <div class="bg-white pb-4 px-4 rounded-md w-full">
-        <div class="flex justify-end w-full pt-6 ">
+        <div class="flex justify-end w-full pt-1 ">
             <a class="w-auto bg-purple-500 hover:bg-purple-700 rounded-lg shadow-xl font-medium text-white px-4 py-2"
                 href="{{ route('categories.create') }}">Añadir categoria</a>
         </div>
