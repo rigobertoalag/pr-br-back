@@ -24,9 +24,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $data = Category::oldest()->paginate(5);
+        $data = Category::oldest()->paginate(10);
+        $user = Auth::user();
 
-        return view('categories.index', compact('data'))
+        return view('categories.index', compact('data','user'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
