@@ -46,9 +46,11 @@ $header = 'Categorias';
                                     class="w-auto h-14 rounded-sm border-gray-300 border transform hover:scale-125"
                                     src="/storage/image/{{ $category->image }}"></td>
                             <td class="px-4 py-4">
-                                <span class="bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs">Activo</span>
-                                |
-                                <span class="bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs">Inactivo</span>
+                                @if ($category->status === true)
+                                    <span class="bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs">Activo</span>
+                                @else
+                                    <span class="bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs">Inactivo</span>
+                                @endif
                             </td>
                             <td class="px-4 py-4">{{ $category->user_id }}</td>
                             <td class="px-4 py-4">

@@ -24,7 +24,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $data = Category::oldest()->paginate(10);
+        $data = Category::oldest()->paginate(5);
 
         return view('categories.index', compact('data'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
@@ -157,5 +157,18 @@ class CategoryController extends Controller
 
         return redirect()->route('categories.index')
             ->with('success', 'Categoria eliminada con exito');
+    }
+
+    public function changeStatus(Request $request, Category $category){
+        if($request->status === true){
+            $category->status = false;
+            $category->update();
+        }else{
+            $category->status = true;
+            $category->update();
+        }
+
+        return redirect()->route('categories.index')
+            ->with('success', 'Categoria actualizada correctamente');
     }
 }
